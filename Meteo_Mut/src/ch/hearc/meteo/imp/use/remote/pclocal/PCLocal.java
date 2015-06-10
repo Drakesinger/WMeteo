@@ -93,7 +93,7 @@ public class PCLocal implements PC_I
 	private void server() throws MeteoServiceException, RemoteException
 		{
 		startMeteoService();
-		//startLocalUIService();
+		startLocalUIService();
 		}
 
 	private void startMeteoService() throws MeteoServiceException, RemoteException
@@ -140,6 +140,7 @@ public class PCLocal implements PC_I
 
 		// Wrap it in a remote.
 		afficheurServiceWrapper = new AfficheurServiceWrapper(afficheurService);
+		RmiTools.shareObject(afficheurServiceWrapper, new RmiURL("AFFICHEUR_LOCAL"));
 		}
 
 	/*------------------------------*\
