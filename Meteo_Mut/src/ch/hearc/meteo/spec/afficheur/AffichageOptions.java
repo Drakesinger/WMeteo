@@ -23,7 +23,8 @@ public class AffichageOptions implements Serializable
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	@Override public String toString()
+	@Override
+	public String toString()
 		{
 		StringBuilder builder = new StringBuilder();
 		builder.append("AffichageOptions [n=");
@@ -49,6 +50,15 @@ public class AffichageOptions implements Serializable
 	public String getTitre()
 		{
 		return this.titre;
+		}
+
+	/*------------------------------*\
+	|*				Set				*|
+	\*------------------------------*/
+
+	public void setTitre(String titre)
+		{
+		this.titre = titre;
 		}
 
 	/*------------------------------------------------------------------*\
