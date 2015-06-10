@@ -69,6 +69,17 @@ public class PCLocal implements PC_I
 			System.err.println("Meteo service exception.");
 			e.printStackTrace();
 			}
+
+		try
+			{
+			//useLocalAndRemote(meteoService, afficheurService, remoteAfficheurCentral);
+			useRemote(meteoService, remoteAfficheurCentral);
+			}
+		catch (MeteoServiceException e)
+			{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
 		}
 
 	/*------------------------------------------------------------------*\
@@ -81,8 +92,14 @@ public class PCLocal implements PC_I
 
 	private void server() throws MeteoServiceException, RemoteException
 		{
+		startMeteoService();
+		//startLocalUIService();
+		}
+
+	private void startMeteoService() throws MeteoServiceException, RemoteException
+		{
 		// Initialize the Meteo Service.
-		this.meteoService = null;
+		meteoService = null;
 		if (USE_SIMULATOR)
 			{
 			meteoService = (new MeteoServiceSimulatorFactory()).create(portCom);
@@ -96,7 +113,8 @@ public class PCLocal implements PC_I
 		meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
 
 		// Create it's RmiURL.
-		//rmiURLmeteoService = RMI_METEO_SERVICE;//new RmiURL(IdTools.createID(PREFIXE_METEO));
+		//rmiURLmeteoService = RMI_METEO_SERVICE;
+		//new RmiURL(IdTools.createID(PREFIXE_METEO));
 
 		// Connect to the meteo service and start it.
 		meteoService.connect();
@@ -106,15 +124,11 @@ public class PCLocal implements PC_I
 		RmiTools.shareObject(meteoServiceWrapper, RMI_METEO_SERVICE);
 		}
 
-	/*------------------------------*\
-	|*				client			*|
-	\*------------------------------*/
-
 	@SuppressWarnings("unused")
-	private void client() throws RemoteException, MeteoServiceException
+	private void startLocalUIService() throws MeteoServiceException, RemoteException
 		{
 		//Local affichage service initialization.
-		AfficheurService_I afficheurService = null;
+		afficheurService = null;
 		if (USE_SIMULATOR)
 			{
 			afficheurService = (new AfficheurSimulateurFactory()).createOnLocalPC(affichageOptions, meteoServiceWrapper);
@@ -125,8 +139,15 @@ public class PCLocal implements PC_I
 			}
 
 		// Wrap it in a remote.
-		AfficheurServiceWrapper afficheurServiceWrapper = new AfficheurServiceWrapper(afficheurService);
+		afficheurServiceWrapper = new AfficheurServiceWrapper(afficheurService);
+		}
 
+	/*------------------------------*\
+	|*				client			*|
+	\*------------------------------*/
+
+	private void client() throws RemoteException, MeteoServiceException
+		{
 		//Get the Remote (PCCentral) by connecting to the supplied RmiURL
 		remoteAfficheurCreator = (RemoteAfficheurCreator_I)RmiTools.connectionRemoteObjectBloquant(rmiURLafficheurManager);
 		System.out.println("Connection succesful to remote afficheur creator.");
@@ -136,12 +157,13 @@ public class PCLocal implements PC_I
 
 		// rmiURLRemoteAfficheur is the URL of the Central PC's UI service.
 		// Get a remote to the CentralPC UI service.
-		AfficheurServiceWrapper_I remoteAfficheurCentral = (AfficheurServiceWrapper_I)RmiTools.connectionRemoteObjectBloquant(rmiURLRemoteAfficheur);
+		remoteAfficheurCentral = (AfficheurServiceWrapper_I)RmiTools.connectionRemoteObjectBloquant(rmiURLRemoteAfficheur);
 
-		use(meteoService, afficheurService, remoteAfficheurCentral);
+		//use(meteoService, afficheurService, remoteAfficheurCentral);
 		}
 
-	private void use(final MeteoService_I meteoService, final AfficheurService_I afficheurService, final AfficheurServiceWrapper_I telecommandeAfficheurCentral) throws MeteoServiceException
+	@SuppressWarnings("unused")
+	private void useLocalAndRemote(final MeteoService_I meteoService, final AfficheurService_I afficheurService, final AfficheurServiceWrapper_I telecommandeAfficheurCentral) throws MeteoServiceException
 		{
 		meteoService.addMeteoListener(new MeteoAdapter()
 			{
@@ -246,6 +268,107 @@ public class PCLocal implements PC_I
 		threadPoolingOptions.start(); // update gui
 		}
 
+	private void useRemote(final MeteoService_I meteoService, final AfficheurServiceWrapper_I telecommandeAfficheurCentral) throws MeteoServiceException
+		{
+		meteoService.addMeteoListener(new MeteoAdapter()
+			{
+
+				@Override
+				public void temperaturePerformed(MeteoEvent event)
+					{
+					try
+						{
+						telecommandeAfficheurCentral.printTemperature(event);
+						}
+					catch (RemoteException e)
+						{
+						System.err.println("RemoteException: cannot send temperature update to the PCCentral.");
+						}
+					}
+
+				@Override
+				public void altitudePerformed(MeteoEvent event)
+					{
+					try
+						{
+						telecommandeAfficheurCentral.printAltitude(event);
+						}
+					catch (RemoteException e)
+						{
+						System.err.println("RemoteException: cannot send Altitude update to the PCCentral.");
+						}
+					}
+
+				@Override
+				public void pressionPerformed(MeteoEvent event)
+					{
+					try
+						{
+						telecommandeAfficheurCentral.printPression(event);
+						}
+					catch (RemoteException e)
+						{
+						System.err.println("RemoteException: cannot send pression update to the PCCentral.");
+						}
+					}
+			});
+
+		// Modify MeteoServiceOptions
+		Thread threadSimulationChangementDt = new Thread(new Runnable()
+			{
+
+				@Override
+				public void run()
+					{
+					double x = 0;
+					double dx = Math.PI / 10;
+
+					while(true)
+						{
+						long dt = 1000 + (long)(5000 * Math.abs(Math.cos(x))); //ms
+
+						System.out.println("modification dt temperature = " + dt);
+
+						meteoService.getMeteoServiceOptions().setTemperatureDT(dt);
+
+						//	System.out.println(meteoService.getMeteoServiceOptions());
+
+						attendre(3000); // disons
+						x += dx;
+						}
+					}
+			});
+
+		// Update GUI MeteoServiceOptions
+		Thread threadPoolingOptions = new Thread(new Runnable()
+			{
+
+				@Override
+				public void run()
+					{
+
+					while(true)
+						{
+						MeteoServiceOptions option = meteoService.getMeteoServiceOptions();
+						try
+							{
+							telecommandeAfficheurCentral.updateMeteoServiceOptions(option);
+							}
+						catch (Exception e)
+							{
+							System.err.println("RemoteException: cannot send option update to the PCCentral.");
+							}
+
+						//System.out.println(option);
+						attendre(1000); //disons
+						}
+					}
+			});
+
+		threadSimulationChangementDt.start();
+		threadPoolingOptions.start(); // update gui
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
@@ -274,10 +397,11 @@ public class PCLocal implements PC_I
 
 	// Tools
 	private MeteoService_I meteoService;
+	private AfficheurService_I afficheurService;
 	private RemoteAfficheurCreator_I remoteAfficheurCreator;
 	private MeteoServiceWrapper meteoServiceWrapper;
-
-	//private RmiURL rmiURLmeteoService;
+	private AfficheurServiceWrapper afficheurServiceWrapper;
+	private AfficheurServiceWrapper_I remoteAfficheurCentral;
 
 	/*------------------------------*\
 	|*			  Static			*|
@@ -292,11 +416,7 @@ public class PCLocal implements PC_I
 
 	// Tools final
 	private static final String PREFIXE_METEO = "METEO_SERVICE";
-	//	private static final String PREFIXE_AFFICHAGE = "METEO_AFFICHAGE";
-
 	public static final String RMI_ID_METEO = PREFIXE_METEO;
-	//	public static final String RMI_ID_AFFICHAGE = PREFIXE_AFFICHAGE;
-
 	public static final RmiURL RMI_METEO_SERVICE = new RmiURL(PREFIXE_METEO);
 
 	}
