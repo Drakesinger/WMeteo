@@ -43,7 +43,8 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	@Override
 	public RmiURL createRemoteAfficheurService(AffichageOptions affichageOptions, RmiURL meteoServiceRmiURL) throws RemoteException
 		{
-		RmiURL afficheurCentralServicermiURL = null;
+		// Create a RmiURL for the Central PC.
+		RmiURL afficheurCentralServicermiURL = rmiUrl();
 		try
 			{
 			MeteoServiceWrapper_I meteoServiceRemote = null;
@@ -56,15 +57,16 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 
 				// server
 				{
+				// Change the UI title to CentralPC so we can diferentiate the GUIs.
+				AffichageOptions affichageOptionsCentral = affichageOptions;
+				affichageOptionsCentral.setTitre("CentralPC");
+
 				// Startup the UI service and wrap it in a remote.
-				AfficheurService_I afficheurCentralService = createAfficheurService(affichageOptions, meteoServiceRemote);
-				AfficheurServiceWrapper afficheurCentralServiceWrapper = new AfficheurServiceWrapper(afficheurCentralService);
+				AfficheurService_I afficheurService = createAfficheurService(affichageOptions, meteoServiceRemote);
+				AfficheurServiceWrapper afficheurServiceWrapper = new AfficheurServiceWrapper(afficheurService);
 
-				// Create a RmiURL for the Central PC.
-				afficheurCentralServicermiURL = new RmiURL(RMI_ID);
-
-				// FIXME share afficheurService
-				RmiTools.shareObject(afficheurCentralServiceWrapper, afficheurCentralServicermiURL);
+				// FIXME share afficheurService. Doesn't want to share.
+				RmiTools.shareObject(afficheurServiceWrapper, afficheurCentralServicermiURL);
 
 				// Return the rmiURL of the UI service on Central PC to the Local PC that called this method.
 				return afficheurCentralServicermiURL; // Retourner le RMI-ID pour une connection distante sur le serveur d'affichage
@@ -73,8 +75,10 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 		catch (RemoteException e)
 			{
 			System.err.println("Could not share object. @:" + afficheurCentralServicermiURL);
-			e.printStackTrace();
-			return null;
+			//e.printStackTrace();
+			// Return the URL regardless.
+			// Find a way to share it in case of error... no way
+			return afficheurCentralServicermiURL;
 			}
 		catch (Exception e)
 			{
