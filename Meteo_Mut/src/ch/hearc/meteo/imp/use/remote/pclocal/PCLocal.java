@@ -20,6 +20,7 @@ import ch.hearc.meteo.spec.reseau.rmiwrapper.AfficheurServiceWrapper;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.AfficheurServiceWrapper_I;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper;
 
+import com.bilat.tools.reseau.rmi.IdTools;
 import com.bilat.tools.reseau.rmi.RmiTools;
 import com.bilat.tools.reseau.rmi.RmiURL;
 
@@ -418,6 +419,7 @@ public class PCLocal implements PC_I
 	// Tools final
 	private static final String PREFIXE_METEO = "METEO_SERVICE";
 	public static final String RMI_ID_METEO = PREFIXE_METEO;
-	public static final RmiURL RMI_METEO_SERVICE = new RmiURL(PREFIXE_METEO);
+	//public static final RmiURL RMI_METEO_SERVICE = new RmiURL(PREFIXE_METEO);
+	public static final RmiURL RMI_METEO_SERVICE = new RmiURL(IdTools.createID(PREFIXE_METEO));
 
 	}
