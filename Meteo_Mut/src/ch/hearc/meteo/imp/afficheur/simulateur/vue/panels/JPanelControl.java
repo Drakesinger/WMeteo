@@ -178,7 +178,9 @@ public class JPanelControl extends JPanel
 							}
 						catch (RemoteException e)
 							{
-							e.printStackTrace();
+							// FIXME
+							//e.printStackTrace();
+							//JOptionPane.showMessageDialog(JPanelControl.this, "The meteoservice could not be called.");
 							}
 						}
 					}

@@ -73,8 +73,8 @@ public class PCLocal implements PC_I
 
 		try
 			{
-			//useLocalAndRemote(meteoService, afficheurService, remoteAfficheurCentral);
-			useRemote(meteoService, remoteAfficheurCentral);
+			useLocalAndRemote(meteoService, afficheurService, remoteAfficheurCentral);
+			//useRemote(meteoService, remoteAfficheurCentral);
 			}
 		catch (MeteoServiceException e)
 			{
@@ -270,6 +270,7 @@ public class PCLocal implements PC_I
 		threadPoolingOptions.start(); // update gui
 		}
 
+	@SuppressWarnings("unused")
 	private void useRemote(final MeteoService_I meteoService, final AfficheurServiceWrapper_I telecommandeAfficheurCentral) throws MeteoServiceException
 		{
 		meteoService.addMeteoListener(new MeteoAdapter()

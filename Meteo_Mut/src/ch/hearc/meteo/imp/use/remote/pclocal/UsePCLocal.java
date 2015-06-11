@@ -15,6 +15,7 @@ import ch.hearc.meteo.imp.reseau.RemoteAfficheurCreator;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
 
+import com.bilat.tools.io.console.Clavier;
 import com.bilat.tools.reseau.rmi.RmiURL;
 
 /**
@@ -46,7 +47,9 @@ public class UsePCLocal
 			RmiURL rmiURLAfficheurManager = new RmiURL(RemoteAfficheurCreator.RMI_ID, ip);
 			//RmiURL rmiURLAfficheurManager = new RmiURL(RemoteAfficheurCreator.RMI_ID, ip, RmiTools.PORT_RMI_DEFAUT);
 
-			int n = 2;
+			// Get the index of the local PC. Just in case.
+			int index = Clavier.lireInt("Please identify this meteo station with an index:");
+			int n = index;
 			int altitudeDT = 750;
 			int pressionDT = 900;
 			int temperatureDT = 1500;
