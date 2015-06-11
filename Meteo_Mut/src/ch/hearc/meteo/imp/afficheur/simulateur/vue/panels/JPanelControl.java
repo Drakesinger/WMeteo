@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.simulateur.vue;
+package ch.hearc.meteo.imp.afficheur.simulateur.vue.panels;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

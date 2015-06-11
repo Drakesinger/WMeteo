@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.simulateur.vue;
+package ch.hearc.meteo.imp.afficheur.real.vue.panels;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
-import ch.hearc.meteo.imp.afficheur.simulateur.moo.AfficheurServiceMOO;
+import ch.hearc.meteo.imp.afficheur.real.moo.AfficheurServiceMOO;
 import ch.hearc.meteo.imp.afficheur.tools.ImageStore;
 
 public class JPanelTabbedData extends JPanel

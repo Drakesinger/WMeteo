@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import ch.hearc.meteo.imp.afficheur.simulateur.moo.AfficheurServiceMOO;
+import ch.hearc.meteo.imp.afficheur.simulateur.vue.panels.JPanelRoot;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
 import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
 
@@ -90,7 +91,6 @@ public class JFrameAfficheurService extends JFrame
 					}
 
 			});
-		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
 
 	private void apparence()

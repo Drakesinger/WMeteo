@@ -8,11 +8,13 @@ import java.rmi.RemoteException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import ch.hearc.meteo.imp.afficheur.real.moo.AfficheurServiceMOO;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
+import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
 
@@ -47,7 +49,7 @@ private void geometry()
 	boutonStart = new JButton("Start");
 	boutonStop = new JButton("Stop");
 	boutonPause = new JToggleButton("Pause");
-
+	buttonDisconnect = new JButton("Disconnect");
 
 	boutonPause.setToolTipText("Affichage only");
 
@@ -56,8 +58,11 @@ private void geometry()
 	boxH.add(boutonStart);
 	boxH.add(Box.createHorizontalStrut(15));
 	boxH.add(boutonStop);
-	boxH.add(Box.createHorizontalGlue());
+	boxH.add(Box.createHorizontalStrut(15));
 	boxH.add(boutonPause);
+	boxH.add(Box.createHorizontalStrut(15));
+	boxH.add(Box.createHorizontalGlue());
+	boxH.add(buttonDisconnect);
 	boxH.add(Box.createHorizontalGlue());
 
 	setLayout(new BorderLayout());
@@ -120,6 +125,40 @@ private void control()
 			@Override public void actionPerformed(ActionEvent e)
 				{
 				afficheurServiceMOO.setPause(!afficheurServiceMOO.isPause());
+				}
+		});
+
+	buttonDisconnect.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+				{
+				try
+					{
+					meteoServiceRemote.disconnect();
+					isDisconnected = true;
+					}
+				catch (RemoteException e1)
+					{
+					System.err.println("Could not call the meteoServiceRemote.");
+					e1.printStackTrace();
+					isDisconnected = false;
+					}
+				catch (MeteoServiceException e1)
+					{
+					System.err.println("Could not disconnect.");
+					e1.printStackTrace();
+					isDisconnected = false;
+					}
+				if (isDisconnected)
+					{
+					JOptionPane.showMessageDialog(JPanelControl.this, "You have been disconnected.");
+					}
+				else
+					{
+					JOptionPane.showMessageDialog(JPanelControl.this, "Could not disconnect, please try again.");
+					}
 				}
 		});
 
@@ -198,8 +237,11 @@ private AfficheurServiceMOO afficheurServiceMOO;
 private JButton boutonStart;
 private JButton boutonStop;
 private JToggleButton boutonPause;
+private JButton buttonDisconnect;
 
 private Thread threadEtatBouton;
+
+private boolean isDisconnected = false;
 
 /*------------------------------*\
 |*			  Static			*|

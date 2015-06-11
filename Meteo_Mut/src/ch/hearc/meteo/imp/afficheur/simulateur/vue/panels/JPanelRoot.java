@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.simulateur.vue;
+package ch.hearc.meteo.imp.afficheur.simulateur.vue.panels;
 
 import java.awt.BorderLayout;
 
@@ -48,9 +48,7 @@ public class JPanelRoot extends JPanel
 	private void geometry()
 		{
 		Box boxV = Box.createVerticalBox();
-		//boxV.add(Box.createVerticalStrut(15));
 		boxV.add(panelData);
-		//boxV.add(Box.createVerticalStrut(15));
 		boxV.add(panelSlider);
 		boxV.add(panelControl);
 		boxV.add(Box.createVerticalStrut(15));
@@ -67,7 +65,6 @@ public class JPanelRoot extends JPanel
 	private void apparence()
 		{
 		// rien
-		//setBackground(Color.ORANGE);
 		}
 
 	private void control()

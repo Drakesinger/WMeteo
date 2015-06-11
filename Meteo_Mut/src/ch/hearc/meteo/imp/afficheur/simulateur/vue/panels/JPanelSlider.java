@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.simulateur.vue;
+package ch.hearc.meteo.imp.afficheur.simulateur.vue.panels;
 
 import java.awt.FlowLayout;
 import java.rmi.RemoteException;
