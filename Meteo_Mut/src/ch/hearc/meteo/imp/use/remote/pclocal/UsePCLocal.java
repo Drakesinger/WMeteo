@@ -80,15 +80,15 @@ public class UsePCLocal
 			{
 			FileInputStream fis = new FileInputStream(FILE_PROPERTIES);
 			BufferedInputStream bis = new BufferedInputStream(fis);
-			Properties propertie = new Properties();
-			propertie.load(bis);
+			Properties properties = new Properties();
+			properties.load(bis);
 
-			stringIP = propertie.getProperty(ADRESSE_IP);
+			stringIP = properties.getProperty(IP_ADDRESS);
 			ip = InetAddress.getByName(stringIP);
 
-			name = propertie.getProperty(LOCATION_NAME);
-			latitude = propertie.getProperty(LATITUDE);
-			longitude = propertie.getProperty(LONGITUDE);
+			name = properties.getProperty(LOCATION_NAME);
+			latitude = properties.getProperty(LATITUDE);
+			longitude = properties.getProperty(LONGITUDE);
 
 			bis.close();
 			fis.close();
@@ -131,13 +131,13 @@ public class UsePCLocal
 			{
 			FileOutputStream fos = new FileOutputStream(FILE_PROPERTIES);
 			BufferedOutputStream bos = new BufferedOutputStream(fos);
-			Properties propertie = new Properties();
+			Properties properties = new Properties();
 
-			propertie.setProperty(ADRESSE_IP, "127.0.0.1");
-			propertie.setProperty(LOCATION_NAME, "Neuch");
-			propertie.setProperty(LATITUDE, "6.45");
-			propertie.setProperty(LONGITUDE, "45.666");
-			propertie.store(bos, STORE_NAME);
+			properties.setProperty(IP_ADDRESS, "127.0.0.1");
+			properties.setProperty(LOCATION_NAME, "Local");
+			properties.setProperty(LATITUDE, "6.45");
+			properties.setProperty(LONGITUDE, "45.66");
+			properties.store(bos, STORE_NAME);
 
 			bos.close();
 			fos.close();
@@ -180,7 +180,7 @@ public class UsePCLocal
 
 	// Tools
 	private static final String STORE_NAME = "Weather Station - Configuration File";
-	private static final String ADRESSE_IP = "ADRESSE_IP";
+	private static final String IP_ADDRESS = "ADRESSE_IP_SERVER";
 	private static final String LOCATION_NAME = "LOCATION_NAME";
 	private static final String LATITUDE = "LATITUDE";
 	private static final String LONGITUDE = "LONGITUDE";
