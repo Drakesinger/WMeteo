@@ -48,7 +48,10 @@ public class AfficheurServiceMOO
 			manage(listAltitude, event);
 			statAltitude.update(event.getValue());
 
-			afficherConsole(listAltitude, MeteoEventType_E.ALTITUDE.name() + ESPACE + affichageOptions.getTitre());
+			if (DEBUG_MODE)
+				{
+				afficherConsole(listAltitude, MeteoEventType_E.ALTITUDE.name() + ESPACE + affichageOptions.getTitre());
+				}
 			}
 		}
 
@@ -59,7 +62,10 @@ public class AfficheurServiceMOO
 			manage(listPression, event);
 			statPression.update(event.getValue());
 
-			afficherConsole(listPression, MeteoEventType_E.PRESSION.name() + ESPACE + affichageOptions.getTitre());
+			if (DEBUG_MODE)
+				{
+				afficherConsole(listPression, MeteoEventType_E.PRESSION.name() + ESPACE + affichageOptions.getTitre());
+				}
 			}
 		}
 
@@ -70,11 +76,12 @@ public class AfficheurServiceMOO
 			manage(listTemperature, event);
 			statTemperature.update(event.getValue());
 
-			afficherConsole(listTemperature, MeteoEventType_E.TEMPERATURE.name() + ESPACE + affichageOptions.getTitre());
+			if (DEBUG_MODE)
+				{
+				afficherConsole(listTemperature, MeteoEventType_E.TEMPERATURE.name() + ESPACE + affichageOptions.getTitre());
+				}
 			}
 		}
-
-
 
 	/*------------------------------*\
 	|*				remote			*|
@@ -210,5 +217,7 @@ public class AfficheurServiceMOO
 	\*------------------------------*/
 
 	private static final String ESPACE = " ";
+
+	private static final boolean DEBUG_MODE = false;
 
 	}
