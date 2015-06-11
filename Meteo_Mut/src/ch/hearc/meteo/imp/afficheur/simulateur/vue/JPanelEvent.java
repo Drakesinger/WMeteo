@@ -2,6 +2,7 @@
 package ch.hearc.meteo.imp.afficheur.simulateur.vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,12 +18,12 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import ch.hearc.meteo.imp.afficheur.simulateur.moo.Stat;
-import ch.hearc.meteo.imp.afficheur.simulateur.vue.atome.BoxSerieTemporelle;
 import ch.hearc.meteo.imp.afficheur.simulateur.vue.atome.JPanelStat;
 import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
@@ -56,7 +57,7 @@ public class JPanelEvent extends JPanel
 	 */
 	public void update()
 		{
-		boxSerieTemnporelle.update();
+		//boxSerieTemnporelle.update();
 		panelStat.update();
 		updateChartData();
 		}
@@ -68,19 +69,19 @@ public class JPanelEvent extends JPanel
 	private void geometry()
 		{
 		panelStat = new JPanelStat(stat);
-		boxSerieTemnporelle = new BoxSerieTemporelle(listMeteoEvent);
+		//boxSerieTemnporelle = new BoxSerieTemporelle(listMeteoEvent);
 		chartPanel = buildChart();
 
 		// Check dimensions to actually see the Chart!
 		panelStat.setMaximumSize(new Dimension(180, 100));
-		boxSerieTemnporelle.setMaximumSize(new Dimension(250, 100));
+		//boxSerieTemnporelle.setMaximumSize(new Dimension(250, 100));
 		chartPanel.setPreferredSize(new Dimension(400, 400));
 
 		Box boxH = Box.createHorizontalBox();
+
 		boxH.add(Box.createHorizontalStrut(15));
 		boxH.add(panelStat);
-		boxH.add(Box.createHorizontalStrut(15));
-		boxH.add(boxSerieTemnporelle);
+		//boxH.add(boxSerieTemnporelle);
 		boxH.add(Box.createHorizontalStrut(15));
 		// Add the jFreeChart Panel.
 		boxH.add(chartPanel);
@@ -155,8 +156,8 @@ public class JPanelEvent extends JPanel
 			};
 
 		// No zoom.
-		chartPanel.setDomainZoomable(false);
-		chartPanel.setRangeZoomable(false);
+		chartPanel.setDomainZoomable(true);
+		chartPanel.setRangeZoomable(true);
 
 		return chartPanel;
 		}
@@ -165,41 +166,21 @@ public class JPanelEvent extends JPanel
 		{
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(titre, "temps", "Values", dataset, true, false, false);
 
-		//		// TODO make it object global attribute
-		//		XYPlot plot = (XYPlot)chart.getPlot();
-		//
-		//		Color backgroundColor = Color.WHITE;
-		//		Color plotColor = Color.BLUE;
-		//		Color plotBackground = Color.WHITE;
-		//
-		//		chart.setBackgroundPaint(backgroundColor);
-		//
-		//		chart.getTitle().setPaint(plotColor);
-		//		plot.setBackgroundPaint(plotBackground);
-		//		plot.setDomainGridlinePaint(Color.BLACK);
-		//		plot.setRangeGridlinePaint(Color.BLACK);
-		//
-		//		plot.setDomainCrosshairVisible(true);
+		XYPlot plot = (XYPlot)chart.getPlot();
 
-		/*
-		//More parameters
-		domainAxis = (DateAxis)plot.getDomainAxis();
+		Color backgroundColor = Color.WHITE;
+		Color plotColor = Color.BLUE;
+		Color plotBackground = Color.WHITE;
 
-		domainAxis.setTickLabelPaint(JFrameAfficheurService.FOREGROUND_COLOR);
-		domainAxis.setLabelPaint(JFrameAfficheurService.FOREGROUND_COLOR);
-		domainAxis.setDateFormatOverride(new SimpleDateFormat("HH:mm:ss"));
+		chart.setBackgroundPaint(backgroundColor);
 
-		plot.getRenderer().setSeriesPaint(0, plotColor);
-		plot.getRenderer().setBaseStroke(new BasicStroke(2));
-		((AbstractRenderer)plot.getRenderer()).setAutoPopulateSeriesStroke(false);
+		chart.getTitle().setPaint(plotColor);
+		plot.setBackgroundPaint(plotBackground);
+		plot.setDomainGridlinePaint(Color.BLACK);
+		plot.setRangeGridlinePaint(Color.BLACK);
 
-		rangeAxis = plot.getRangeAxis();
-		rangeAxis.setTickLabelPaint(JFrameAfficheurService.FOREGROUND_COLOR);
-		rangeAxis.setLabelPaint(JFrameAfficheurService.FOREGROUND_COLOR);
+		plot.setDomainCrosshairVisible(true);
 
-		setRange();
-		setDomain();
-		 */
 		return chart;
 		}
 
@@ -215,7 +196,7 @@ public class JPanelEvent extends JPanel
 
 	// Tools
 	private JPanelStat panelStat;
-	private BoxSerieTemporelle boxSerieTemnporelle;
+	//private BoxSerieTemporelle boxSerieTemnporelle;
 	private ChartPanel chartPanel;
 
 	// Chart elements
