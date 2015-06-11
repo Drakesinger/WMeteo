@@ -56,10 +56,12 @@ public class JPanelControl extends JPanel
 		boxH.add(boutonStart);
 		boxH.add(Box.createHorizontalStrut(15));
 		boxH.add(boutonStop);
-		boxH.add(Box.createHorizontalGlue());
+		boxH.add(Box.createHorizontalStrut(15));
 		boxH.add(boutonPause);
+		boxH.add(Box.createHorizontalStrut(15));
 		boxH.add(Box.createHorizontalGlue());
 		boxH.add(buttonDisconnect);
+		boxH.add(Box.createHorizontalGlue());
 
 		setLayout(new BorderLayout());
 		add(boxH, BorderLayout.CENTER);

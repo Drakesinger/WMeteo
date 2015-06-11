@@ -72,10 +72,9 @@ public class JPanelEvent extends JPanel
 
 		// Check dimensions to actually see the Chart!
 		panelStat.setMaximumSize(new Dimension(180, 100));
-		chartPanel.setPreferredSize(new Dimension(400, 400));
+		chartPanel.setPreferredSize(new Dimension(540, 400));
 
 		Box boxH = Box.createHorizontalBox();
-
 		boxH.add(Box.createHorizontalStrut(15));
 		boxH.add(panelStat);
 		boxH.add(Box.createHorizontalStrut(15));
@@ -89,7 +88,8 @@ public class JPanelEvent extends JPanel
 		boxV.add(Box.createVerticalStrut(15));
 
 		setLayout(new BorderLayout());
-		add(boxV, BorderLayout.CENTER);
+		add(boxV,BorderLayout.CENTER);
+		//add(chartPanel, BorderLayout.CENTER);
 		setBorder(BorderFactory.createTitledBorder(titre));
 		}
 
@@ -150,6 +150,7 @@ public class JPanelEvent extends JPanel
 					chart.draw((Graphics2D)g, new Rectangle2D.Double(0, 0, w, h));
 					}
 			};
+		chartPanel.setMouseWheelEnabled(true);
 
 		chartPanel.setDomainZoomable(true);
 		chartPanel.setRangeZoomable(true);

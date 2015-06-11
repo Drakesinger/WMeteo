@@ -54,7 +54,6 @@ public class JFrameAfficheurService extends JFrame
 
 	private void control()
 		{
-
 		this.addWindowListener(new WindowAdapter()
 			{
 
@@ -98,8 +97,8 @@ public class JFrameAfficheurService extends JFrame
 		{
 		setTitle(afficheurServiceMOO.getTitre());
 
-		setSize(1500, 900);
-		//		setResizable(false);
+		setSize(770, 645);
+		setResizable(false);
 
 		setLocationRelativeTo(null);
 		setVisible(true);
