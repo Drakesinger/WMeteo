@@ -8,11 +8,13 @@ import java.rmi.RemoteException;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import ch.hearc.meteo.imp.afficheur.simulateur.moo.AfficheurServiceMOO;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
+import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
 public class JPanelControl extends JPanel
@@ -45,7 +47,7 @@ public class JPanelControl extends JPanel
 		boutonStart = new JButton("Start");
 		boutonStop = new JButton("Stop");
 		boutonPause = new JToggleButton("Pause");
-
+		buttonDisconnect = new JButton("Disconnect");
 
 		boutonPause.setToolTipText("Affichage only");
 
@@ -57,6 +59,7 @@ public class JPanelControl extends JPanel
 		boxH.add(Box.createHorizontalGlue());
 		boxH.add(boutonPause);
 		boxH.add(Box.createHorizontalGlue());
+		boxH.add(buttonDisconnect);
 
 		setLayout(new BorderLayout());
 		add(boxH, BorderLayout.CENTER);
@@ -72,7 +75,8 @@ public class JPanelControl extends JPanel
 		boutonStart.addActionListener(new ActionListener()
 			{
 
-				@Override public void actionPerformed(ActionEvent e)
+				@Override
+				public void actionPerformed(ActionEvent e)
 					{
 					try
 						{
@@ -96,7 +100,8 @@ public class JPanelControl extends JPanel
 		boutonStop.addActionListener(new ActionListener()
 			{
 
-				@Override public void actionPerformed(ActionEvent e)
+				@Override
+				public void actionPerformed(ActionEvent e)
 					{
 					try
 						{
@@ -115,16 +120,52 @@ public class JPanelControl extends JPanel
 		boutonPause.addActionListener(new ActionListener()
 			{
 
-				@Override public void actionPerformed(ActionEvent e)
+				@Override
+				public void actionPerformed(ActionEvent e)
 					{
 					afficheurServiceMOO.setPause(!afficheurServiceMOO.isPause());
+					}
+			});
+
+		buttonDisconnect.addActionListener(new ActionListener()
+			{
+
+				@Override
+				public void actionPerformed(ActionEvent e)
+					{
+					try
+						{
+						meteoServiceRemote.disconnect();
+						isDisconnected = true;
+						}
+					catch (RemoteException e1)
+						{
+						System.err.println("Could not call the meteoServiceRemote.");
+						e1.printStackTrace();
+						isDisconnected = false;
+						}
+					catch (MeteoServiceException e1)
+						{
+						System.err.println("Could not disconnect.");
+						e1.printStackTrace();
+						isDisconnected = false;
+						}
+					if (isDisconnected)
+						{
+						JOptionPane.showMessageDialog(JPanelControl.this, "You have been disconnected.");
+						}
+					else
+						{
+						JOptionPane.showMessageDialog(JPanelControl.this, "Could not disconnect, please try again.");
+						}
 					}
 			});
 
 		threadEtatBouton = new Thread(new Runnable()
 			{
 
-				@Override public void run()
+				@Override
+				public void run()
 					{
 					while(true)
 						{
@@ -195,9 +236,12 @@ public class JPanelControl extends JPanel
 	// Tools
 	private JButton boutonStart;
 	private JButton boutonStop;
+	private JButton buttonDisconnect;
 	private JToggleButton boutonPause;
 
 	private Thread threadEtatBouton;
+
+	private boolean isDisconnected = false;
 
 	/*------------------------------*\
 	|*			  Static			*|
