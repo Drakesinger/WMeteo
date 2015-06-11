@@ -84,10 +84,11 @@ public class JPanelTabbedData extends JPanel
 	private void buildTab(String title, JPanelEvent pannelEvent, int index, ImageIcon imageIcon)
 		{
 		int h = imageIcon.getIconHeight();
-		Image iconScaled = imageIcon.getImage().getScaledInstance(h/3, h/3, Image.SCALE_FAST);
+
+		Image iconScaled = imageIcon.getImage().getScaledInstance(h / 3, h / 3, Image.SCALE_FAST);
 		JLabel label = new JLabel(new ImageIcon(iconScaled));
 
-		tabbedPane.insertTab(null, null, pannelEvent, title, index);
+		tabbedPane.insertTab(title, null, pannelEvent, title, index);
 		tabbedPane.setTabComponentAt(index, label);
 
 		}

@@ -6,7 +6,6 @@ import java.awt.event.WindowEvent;
 import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import ch.hearc.meteo.imp.afficheur.simulateur.moo.AfficheurServiceMOO;
 import ch.hearc.meteo.imp.afficheur.simulateur.vue.panels.JPanelRoot;
@@ -64,19 +63,23 @@ public class JFrameAfficheurService extends JFrame
 					// Try to disconnect from the meteoService
 					try
 						{
+						if (!JFrameAfficheurService.this.afficheurServiceMOO.getMeteoServiceRemote().isRunning())
+							{
+							System.exit(0); // 0 normal, -1 anormal
+							}
 						JFrameAfficheurService.this.afficheurServiceMOO.getMeteoServiceRemote().disconnect();
 						JFrameAfficheurService.this.isDisconnected = true;
 						}
 					catch (RemoteException e1)
 						{
 						System.err.println("Could not call the meteoServiceRemote.");
-						e1.printStackTrace();
+						//						e1.printStackTrace();
 						JFrameAfficheurService.this.isDisconnected = false;
 						}
 					catch (MeteoServiceException e2)
 						{
 						System.err.println("Could not disconnect.");
-						e2.printStackTrace();
+						//						e2.printStackTrace();
 						JFrameAfficheurService.this.isDisconnected = false;
 						}
 
@@ -84,12 +87,8 @@ public class JFrameAfficheurService extends JFrame
 						{
 						System.exit(0); // 0 normal, -1 anormal
 						}
-					else
-						{
-						JOptionPane.showMessageDialog(JFrameAfficheurService.this, "Could not disconnect, please try again.");
-						}
+					System.exit(0); // 0 normal, -1 anormal
 					}
-
 			});
 		}
 

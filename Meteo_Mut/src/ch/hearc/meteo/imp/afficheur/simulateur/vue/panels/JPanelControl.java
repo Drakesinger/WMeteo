@@ -137,28 +137,25 @@ public class JPanelControl extends JPanel
 					{
 					try
 						{
-						meteoServiceRemote.disconnect();
-						isDisconnected = true;
+						if (!meteoServiceRemote.isRunning())
+							{
+							JOptionPane.showMessageDialog(JPanelControl.this, "Could not disconnect, the meteo Station has already been disconnected.");
+							}
+						else
+							{
+							meteoServiceRemote.disconnect();
+							JOptionPane.showMessageDialog(JPanelControl.this, "You have been disconnected.");
+							}
 						}
 					catch (RemoteException e1)
 						{
 						System.err.println("Could not call the meteoServiceRemote.");
 						e1.printStackTrace();
-						isDisconnected = false;
 						}
 					catch (MeteoServiceException e1)
 						{
 						System.err.println("Could not disconnect.");
 						e1.printStackTrace();
-						isDisconnected = false;
-						}
-					if (isDisconnected)
-						{
-						JOptionPane.showMessageDialog(JPanelControl.this, "You have been disconnected.");
-						}
-					else
-						{
-						JOptionPane.showMessageDialog(JPanelControl.this, "Could not disconnect, please try again.");
 						}
 					}
 			});
