@@ -266,7 +266,7 @@ public class PCLocal implements PC_I
 					}
 			});
 
-		threadSimulationChangementDt.start();
+		//threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
 
@@ -368,7 +368,7 @@ public class PCLocal implements PC_I
 					}
 			});
 
-		threadSimulationChangementDt.start();
+		//threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
 
