@@ -19,7 +19,7 @@ public class JPanelRoot extends JPanel
 	public JPanelRoot(AfficheurServiceMOO afficheurServiceMOO)
 		{
 		this.panelControl = new JPanelControl(afficheurServiceMOO);
-		this.panelData = new JPanelData(afficheurServiceMOO);
+		this.panelData = new JPanelTabbedData(afficheurServiceMOO);
 		this.panelSlider = new JPanelSlider(afficheurServiceMOO);
 
 		geometry();
@@ -81,7 +81,7 @@ public class JPanelRoot extends JPanel
 
 	// Tools
 	private JPanelControl panelControl;
-	private JPanelData panelData;
+	private JPanelTabbedData panelData;
 	private JPanelSlider panelSlider;
 
 	}

@@ -57,7 +57,6 @@ public class JPanelEvent extends JPanel
 	 */
 	public void update()
 		{
-		//boxSerieTemnporelle.update();
 		panelStat.update();
 		updateChartData();
 		}
@@ -69,19 +68,16 @@ public class JPanelEvent extends JPanel
 	private void geometry()
 		{
 		panelStat = new JPanelStat(stat);
-		//boxSerieTemnporelle = new BoxSerieTemporelle(listMeteoEvent);
 		chartPanel = buildChart();
 
 		// Check dimensions to actually see the Chart!
 		panelStat.setMaximumSize(new Dimension(180, 100));
-		//boxSerieTemnporelle.setMaximumSize(new Dimension(250, 100));
 		chartPanel.setPreferredSize(new Dimension(400, 400));
 
 		Box boxH = Box.createHorizontalBox();
 
 		boxH.add(Box.createHorizontalStrut(15));
 		boxH.add(panelStat);
-		//boxH.add(boxSerieTemnporelle);
 		boxH.add(Box.createHorizontalStrut(15));
 		// Add the jFreeChart Panel.
 		boxH.add(chartPanel);
@@ -155,7 +151,6 @@ public class JPanelEvent extends JPanel
 					}
 			};
 
-		// No zoom.
 		chartPanel.setDomainZoomable(true);
 		chartPanel.setRangeZoomable(true);
 
@@ -196,7 +191,6 @@ public class JPanelEvent extends JPanel
 
 	// Tools
 	private JPanelStat panelStat;
-	//private BoxSerieTemporelle boxSerieTemnporelle;
 	private ChartPanel chartPanel;
 
 	// Chart elements

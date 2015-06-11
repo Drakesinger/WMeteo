@@ -1,25 +1,22 @@
 
 package ch.hearc.meteo.imp.afficheur.simulateur.vue;
 
-import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import ch.hearc.meteo.imp.afficheur.simulateur.moo.AfficheurServiceMOO;
 
-/**
- * Contains the data received from the meteo station.
- * Three panels, Pression, Altitude, Temperature
- */
-public class JPanelData extends JPanel
+public class JPanelTabbedData extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelData(AfficheurServiceMOO afficheurServiceMOO)
+	public JPanelTabbedData(AfficheurServiceMOO afficheurServiceMOO)
 		{
 		// Inputs
 		this.afficheurServiceMOO = afficheurServiceMOO;
@@ -31,7 +28,7 @@ public class JPanelData extends JPanel
 
 		geometry();
 		control();
-		apparence();
+		appearance();
 		}
 
 	/*------------------------------------------------------------------*\
@@ -45,31 +42,57 @@ public class JPanelData extends JPanel
 		pannelTemperature.update();
 		}
 
+	/*------------------------------*\
+	|*				Set				*|
+	\*------------------------------*/
+
+	/*------------------------------*\
+	|*				Get				*|
+	\*------------------------------*/
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 
 	private void geometry()
 		{
-		Box boxV = Box.createVerticalBox();
-		boxV.add(Box.createVerticalStrut(15));
-		boxV.add(pannelPression);
-		boxV.add(Box.createVerticalStrut(15));
-		boxV.add(pannelAltitude);
-		boxV.add(Box.createVerticalStrut(15));
-		boxV.add(pannelTemperature);
-		boxV.add(Box.createVerticalStrut(15));
+		// JComponent : Instanciation
+		tabbedPane = new JTabbedPane(SwingConstants.TOP);
 
-		setLayout(new BorderLayout());
-		add(boxV, BorderLayout.CENTER);
+		buildTab("Pression", pannelPression,0);
+		buildTab("Altitude", pannelAltitude,1);
+		buildTab("Temperature", pannelTemperature,2);
+
+			// Layout : Specification
+			{
+			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
+			setLayout(flowlayout);
+
+			// flowlayout.setHgap(20);
+			// flowlayout.setVgap(20);
+			}
+
+		// JComponent : add
+		add(tabbedPane);
 		}
 
-	private void apparence()
+	private void buildTab(String title, JPanelEvent pannelEvent, int index)
 		{
-		//setBackground(Color.GREEN);
+		//Box box = Box.createVerticalBox();
+
+		//box.add(Box.createVerticalStrut(15));
+		//box.add(pannelEvent);
+		//box.add(Box.createVerticalStrut(15));
+		tabbedPane.insertTab(title, null, pannelEvent, null, index);
+		//tabbedPane.addTab(title, null, pannelEvent, null);
 		}
 
 	private void control()
+		{
+		// rien
+		}
+
+	private void appearance()
 		{
 		// rien
 		}
@@ -78,7 +101,7 @@ public class JPanelData extends JPanel
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	// Inputs
+	// Input
 	@SuppressWarnings("unused")
 	private AfficheurServiceMOO afficheurServiceMOO;
 
@@ -87,4 +110,5 @@ public class JPanelData extends JPanel
 	private JPanelEvent pannelAltitude;
 	private JPanelEvent pannelTemperature;
 
+	private JTabbedPane tabbedPane;
 	}
