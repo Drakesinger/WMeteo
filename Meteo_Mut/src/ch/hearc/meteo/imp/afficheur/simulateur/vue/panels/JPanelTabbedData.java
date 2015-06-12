@@ -72,9 +72,6 @@ public class JPanelTabbedData extends JPanel
 			{
 			FlowLayout flowlayout = new FlowLayout(FlowLayout.CENTER);
 			setLayout(flowlayout);
-
-			// flowlayout.setHgap(20);
-			// flowlayout.setVgap(20);
 			}
 
 		// JComponent : add
@@ -83,6 +80,7 @@ public class JPanelTabbedData extends JPanel
 
 	private void buildTab(String title, JPanelEvent pannelEvent, int index, ImageIcon imageIcon)
 		{
+		// Scale the image to fit.
 		int h = imageIcon.getIconHeight();
 
 		Image iconScaled = imageIcon.getImage().getScaledInstance(h / 3, h / 3, Image.SCALE_FAST);

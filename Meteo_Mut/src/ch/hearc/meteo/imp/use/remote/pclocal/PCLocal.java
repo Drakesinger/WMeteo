@@ -73,12 +73,12 @@ public class PCLocal implements PC_I
 
 		try
 			{
+			// Choose wether to get information locally or only remotely.
 			useLocalAndRemote(meteoService, afficheurService, remoteAfficheurCentral);
 			//useRemote(meteoService, remoteAfficheurCentral);
 			}
 		catch (MeteoServiceException e)
 			{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			}
 		}
@@ -113,10 +113,6 @@ public class PCLocal implements PC_I
 		// Wrap the MeteoService so that it can be used as a remote.
 		meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
 
-		// Create it's RmiURL.
-		//rmiURLmeteoService = RMI_METEO_SERVICE;
-		//new RmiURL(IdTools.createID(PREFIXE_METEO));
-
 		// Connect to the meteo service and start it.
 		meteoService.connect();
 		meteoService.start(meteoServiceOptions);
@@ -125,7 +121,6 @@ public class PCLocal implements PC_I
 		RmiTools.shareObject(meteoServiceWrapper, RMI_METEO_SERVICE);
 		}
 
-	@SuppressWarnings("unused")
 	private void startLocalUIService() throws MeteoServiceException, RemoteException
 		{
 		//Local affichage service initialization.
@@ -160,8 +155,6 @@ public class PCLocal implements PC_I
 		// rmiURLRemoteAfficheur is the URL of the Central PC's UI service.
 		// Get a remote to the CentralPC UI service.
 		remoteAfficheurCentral = (AfficheurServiceWrapper_I)RmiTools.connectionRemoteObjectBloquant(rmiURLRemoteAfficheur);
-
-		//use(meteoService, afficheurService, remoteAfficheurCentral);
 		}
 
 	@SuppressWarnings("unused")
@@ -266,7 +259,6 @@ public class PCLocal implements PC_I
 					}
 			});
 
-		//threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
 
@@ -368,7 +360,6 @@ public class PCLocal implements PC_I
 					}
 			});
 
-		//threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
 
@@ -410,6 +401,7 @@ public class PCLocal implements PC_I
 	|*			  Static			*|
 	\*------------------------------*/
 
+	@SuppressWarnings("unused")
 	private static final boolean DEBUG_MODE = true;
 	private final static boolean USE_SIMULATOR = true;
 
@@ -420,7 +412,6 @@ public class PCLocal implements PC_I
 	// Tools final
 	private static final String PREFIXE_METEO = "METEO_SERVICE";
 	public static final String RMI_ID_METEO = PREFIXE_METEO;
-	//public static final RmiURL RMI_METEO_SERVICE = new RmiURL(PREFIXE_METEO);
 	public static final RmiURL RMI_METEO_SERVICE = new RmiURL(IdTools.createID(PREFIXE_METEO));
 
 	}

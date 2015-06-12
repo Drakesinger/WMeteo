@@ -31,10 +31,8 @@ public class UsePCLocal
 
 	public static void main(String[] args)
 		{
-		//saveProperties();
 		readProperties();
 		main();
-		//saveProperties();
 		}
 
 	public static void main()
@@ -44,10 +42,7 @@ public class UsePCLocal
 
 			// URL of the UI manager the Local PC needs to connect to.
 			RmiURL rmiURLAfficheurManager = new RmiURL(RemoteAfficheurCreator.RMI_ID, ip);
-			//RmiURL rmiURLAfficheurManager = new RmiURL(RemoteAfficheurCreator.RMI_ID, ip, RmiTools.PORT_RMI_DEFAUT);
 
-			// Get the index of the local PC. Just in case.
-			//int index = Clavier.lireInt("Please identify this meteo station with an index:");
 			int n = 5;
 			int altitudeDT = 750;
 			int pressionDT = 900;
@@ -127,6 +122,7 @@ public class UsePCLocal
 			}
 		}
 
+	@SuppressWarnings("unused")
 	private static void saveProperties()
 		{
 		try

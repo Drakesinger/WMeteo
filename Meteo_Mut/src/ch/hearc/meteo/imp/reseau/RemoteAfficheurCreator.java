@@ -65,7 +65,7 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 				AfficheurService_I afficheurService = createAfficheurService(affichageOptions, meteoServiceRemote);
 				AfficheurServiceWrapper afficheurServiceWrapper = new AfficheurServiceWrapper(afficheurService);
 
-				// FIXME share afficheurService. Doesn't want to share.
+				// Share afficheurService.
 				RmiTools.shareObject(afficheurServiceWrapper, afficheurCentralServicermiURL);
 
 				// Return the rmiURL of the UI service on Central PC to the Local PC that called this method.
@@ -75,9 +75,8 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 		catch (RemoteException e)
 			{
 			System.err.println("Could not share object. @:" + afficheurCentralServicermiURL);
-			//e.printStackTrace();
+
 			// Return the URL regardless.
-			// Find a way to share it in case of error... no way
 			return afficheurCentralServicermiURL;
 			}
 		catch (Exception e)
@@ -146,5 +145,4 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	private static final String PREFIXE = "AFFICHEUR_SERVICE";
 
 	public static final String RMI_ID = PREFIXE;
-	//public static final RmiURL RMI_URL = new RmiURL(RMI_ID);
 	}

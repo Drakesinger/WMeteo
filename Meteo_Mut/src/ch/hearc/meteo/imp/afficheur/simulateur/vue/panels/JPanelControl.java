@@ -69,7 +69,7 @@ public class JPanelControl extends JPanel
 
 	private void apparence()
 		{
-		// setBackground(Color.YELLOW);
+		// Rien.
 		}
 
 	private void control()
@@ -175,9 +175,7 @@ public class JPanelControl extends JPanel
 							}
 						catch (RemoteException e)
 							{
-							// FIXME
 							//e.printStackTrace();
-							//JOptionPane.showMessageDialog(JPanelControl.this, "The meteoservice could not be called.");
 							}
 						}
 					}
@@ -215,7 +213,6 @@ public class JPanelControl extends JPanel
 
 	private static void sleep(long delayMS)
 		{
-		//System.out.println("sleep main: "+delayMS);
 		try
 			{
 			Thread.sleep(delayMS);
@@ -242,6 +239,7 @@ public class JPanelControl extends JPanel
 
 	private Thread threadEtatBouton;
 
+	@SuppressWarnings("unused")
 	private boolean isDisconnected = false;
 
 	/*------------------------------*\

@@ -89,7 +89,6 @@ public class JPanelEvent extends JPanel
 
 		setLayout(new BorderLayout());
 		add(boxV,BorderLayout.CENTER);
-		//add(chartPanel, BorderLayout.CENTER);
 		setBorder(BorderFactory.createTitledBorder(titre));
 		}
 

@@ -73,13 +73,11 @@ public class JFrameAfficheurService extends JFrame
 					catch (RemoteException e1)
 						{
 						System.err.println("Could not call the meteoServiceRemote.");
-						//						e1.printStackTrace();
 						JFrameAfficheurService.this.isDisconnected = false;
 						}
 					catch (MeteoServiceException e2)
 						{
 						System.err.println("Could not disconnect.");
-						//						e2.printStackTrace();
 						JFrameAfficheurService.this.isDisconnected = false;
 						}
 
@@ -87,7 +85,7 @@ public class JFrameAfficheurService extends JFrame
 						{
 						System.exit(0); // 0 normal, -1 anormal
 						}
-					System.exit(0); // 0 normal, -1 anormal
+					System.exit(-1); // 0 normal, -1 anormal
 					}
 			});
 		}

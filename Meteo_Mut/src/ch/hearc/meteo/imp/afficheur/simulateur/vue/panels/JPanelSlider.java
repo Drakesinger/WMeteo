@@ -82,8 +82,6 @@ public class JPanelSlider extends JPanel
 
 	private void apparence()
 		{
-		//setBackground(Color.ORANGE);
-
 		jslider.setOrientation(SwingConstants.HORIZONTAL);
 		}
 
